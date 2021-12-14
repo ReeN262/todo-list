@@ -12,7 +12,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { InProgressiveComponent } from './components/left-components/in-progressive/in-progressive.component';
 import { DoneComponent } from './components/right-components/done/done.component';
 import { AddTaskComponent } from './components/main-container/add-task/add-task.component';
@@ -28,7 +27,6 @@ import { MainContainerComponent } from './components/main-container/main-contain
 @NgModule({
   declarations: [
     AppComponent,
-    TodoListComponent,
     InProgressiveComponent,
     DoneComponent,
     AddTaskComponent,

@@ -1,0 +1,17 @@
+div {
+  display: flex;
+}
+
+.MainContainer {
+  height: 100%;
+  background-size: 100%;
+  background: #303030;
+}
+
+app-in-progressive , app-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  color: black;
+}
