@@ -1,0 +1,29 @@
+
+.mat-table {
+  width: 100%;
+}
+
+.mat-paginator {
+  width: 100%;
+}
+.mat-elevation-z8 {
+  width: 100%;
+}
+.table-button {
+  width: 95px;
+  margin: 5px;
+}
+
+.mat-cell {
+  text-align: center;
+}
+
+.mat-header-cell {
+  text-align: center;
+}
+
+button {
+  border: rgba(255,255,255,.7) solid 1px;
+  width: 95%;
+  font-size: 17px;
+}

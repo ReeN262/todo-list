@@ -1,0 +1,28 @@
+div {
+  display: flex;
+}
+.toDoList {
+  width: 350px;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.example-full-width {
+  width: 100%;
+  margin: 20px;
+}
+
+button {
+  font-size: 17px;
+}
+
+.mat-input-element {
+  caret-color: black;
+}
+
+.mat-raised-button {
+  background: none;
+  border: rgba(255,255,255,.7) solid 1px;
+}
