@@ -1,0 +1,25 @@
+<div class="user-profile-container" *ngIf="user; let user">
+  <img src="{{user.avatar}}" alt="user image">
+  <app-logout></app-logout>
+  <span>{{user.name}}</span>
+</div>
+<div class="projects-container">
+  <h4>Projects</h4>
+  <div class="example-button-container">
+    <mat-form-field appearance="fill">
+      <mat-label>Project name</mat-label>
+      <mat-select #re (selectionChange)="changeProject($event.value)">
+        <mat-option *ngFor="let project of projects" value="{{project.name}}">
+          {{(project.name)}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-mini-fab color="primary" (click)="openDialogProjectCreate()">
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-mini-fab color="primary" (click)="deleteCurrentProject()">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>
+

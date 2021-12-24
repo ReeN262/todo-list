@@ -1,0 +1,40 @@
+/*h1 {*/
+/*  font-size: 30px;*/
+/*  color: rgba(255,255,255,.7);*/
+/*}*/
+
+.google-btn {
+  display: flex;
+  justify-content: flex-start;
+  width: 210px;
+  height: 60px;
+  cursor: pointer;
+}
+
+.google-btn:hover {
+  border: 1px white solid;
+
+}
+.google-btn:active {
+  border: 2px white solid;
+}
+.google-icon-wrapper {
+  display: flex;
+  background: white;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 50px;
+}
+
+.btn-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 160px;
+  background: #4285f4;
+  font-size: 18px;
+  color: white;
+}
+

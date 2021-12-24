@@ -1,0 +1,14 @@
+app-add-task, app-add-project {
+display: block;
+  height: 48%;
+  width: 350px;
+}
+
+app-sign-in {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 350px;
+}

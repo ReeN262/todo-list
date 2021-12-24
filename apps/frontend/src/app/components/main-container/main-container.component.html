@@ -1,0 +1,9 @@
+<app-sign-in *ngIf="!checkLogin(); else loginTrue"></app-sign-in>
+<ng-template #loginTrue>
+  <app-add-project ></app-add-project>
+  <app-add-task></app-add-task>
+</ng-template>
+
+
+
+
