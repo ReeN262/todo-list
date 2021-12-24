@@ -1,7 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { TodoListService } from '../../../service/todo-list.service';
+import { TodoListService } from '../../../service/todo/todo-list.service';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import {InProgressService} from "../../../service/InProgress/inProgress.service";
+import {DoneTaskService} from "../../../service/doneTask/done-task.service";
+
+interface InProgress {
+  id?: number;
+  taskName: string;
+  projectId: number;
+}
 
 @Component({
   selector: 'app-task',
@@ -9,11 +17,15 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./task.component.css'],
 })
 export class TaskComponent {
-  public tasks: string[] = [];
-  public dataSource: MatTableDataSource<string>;
+  public tasks: InProgress[] = [];
+  public dataSource: MatTableDataSource<InProgress>;
+  private currentProjectId: number;
 
-  constructor(readonly todoListService: TodoListService) {
-    this.dataSource = new MatTableDataSource<string>(this.tasks);
+  constructor(
+    readonly inProgressService: InProgressService,
+    readonly todoListService: TodoListService,
+    readonly doneTaskService: DoneTaskService) {
+    this.dataSource = new MatTableDataSource<InProgress>(this.tasks);
   }
   @ViewChild(MatTable) table: MatTable<any>;
   @ViewChild(MatPaginator)  paginator: MatPaginator;
@@ -21,27 +33,39 @@ export class TaskComponent {
 
   ngOnInit(): void {
     this.getUpdate();
+    this.getCurrentProject();
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
   getUpdate() {
     this.todoListService.getTask().subscribe((tasks) => {
-      this.tasks.push(tasks);
+      this.tasks = tasks;
       this.dataSource.data = this.tasks;
       this.table.renderRows();
     });
   }
-  deleteTask(taskIndex: number) {
-    this.tasks.splice(taskIndex, 1);
-    this.dataSource.data = this.tasks;
-    this.table.renderRows();
+  deleteTask(arrTaskIndex: number) {
+    this.inProgressService.deleteInProgressTask(this.tasks[arrTaskIndex].projectId).subscribe(() => {
+      this.tasks.splice(arrTaskIndex, 1);
+      this.dataSource.data = this.tasks;
+      this.table.renderRows();
+    })
   }
-
-  addInDoneTask(taskIndex: number) {
-    this.todoListService.addInDoneTask(this.tasks[taskIndex]);
-    this.tasks.splice(taskIndex, 1);
-    this.dataSource.data = this.tasks;
-    this.table.renderRows();
+  getCurrentProject() {
+    this.todoListService.getCurrentProject().subscribe(project => this.currentProjectId = project);
+  }
+  addInDoneTask(arrTaskIndex: number) {
+    this.doneTaskService.addTaskInDone(this.tasks[arrTaskIndex].id).subscribe(() => {
+      this.tasks.splice(arrTaskIndex, 1);
+      this.dataSource.data = this.tasks;
+      this.table.renderRows();
+      setTimeout(() =>  this.updateDoneTaskTable(), 100);
+    })
+  }
+  updateDoneTaskTable() {
+    this.doneTaskService.getAllDoneTask(this.currentProjectId).subscribe(doneTask => {
+      this.todoListService.addInDoneTask(doneTask);
+    })
   }
 }

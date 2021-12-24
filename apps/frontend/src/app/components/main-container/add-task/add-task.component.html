@@ -1,12 +1,8 @@
-<div class="toDoList">
-<!--  <div class="example-button-container">-->
-<!--    <button mat-fab color="warn" aria-label="Example icon button with a home icon">-->
-<!--      <mat-icon>add</mat-icon>-->
-<!--    </button>-->
-<!--  </div>-->
-    <mat-form-field class="example-full-width" appearance="fill">
+<div class="add-task" *ngIf="currentProjectId !== 0 && currentProjectId">
+    <mat-form-field class="example-full-width" appearance="fill" >
       <mat-label>Adding in progressive List</mat-label>
       <input matInput [(ngModel)]="newTask" type="text">
     </mat-form-field>
     <button mat-raised-button color="primary" id="addTask" (click)="addTask()">ADD TASK</button>
 </div>
+

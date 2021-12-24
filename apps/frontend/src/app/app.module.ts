@@ -23,6 +23,14 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AddProjectComponent } from './components/main-container/add-project/add-project.component';
 import { MainContainerComponent } from './components/main-container/main-container.component';
+import {MatSelectModule} from "@angular/material/select";
+import { ProjectCreateDialogComponent } from './components/main-container/project-create-dialog/project-create-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import { LogoutComponent } from './components/main-container/logout/logout.component';
+import { SignInComponent } from './components/main-container/sign-in/sign-in.component';
+import {CookieService} from "ngx-cookie-service";
+import {HttpClientModule} from "@angular/common/http";
+import {OAuthModule} from "angular-oauth2-oidc";
 
 @NgModule({
   declarations: [
@@ -34,6 +42,9 @@ import { MainContainerComponent } from './components/main-container/main-contain
     DoneTaskComponent,
     AddProjectComponent,
     MainContainerComponent,
+    ProjectCreateDialogComponent,
+    LogoutComponent,
+    SignInComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,8 +62,12 @@ import { MainContainerComponent } from './components/main-container/main-contain
     MatPaginatorModule,
     MatSortModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
+    MatDialogModule,
+    HttpClientModule,
+    OAuthModule.forRoot()
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

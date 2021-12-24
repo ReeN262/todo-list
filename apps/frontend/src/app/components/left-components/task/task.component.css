@@ -10,10 +10,9 @@
   width: 100%;
 }
 .table-button {
-  width: 95px;
-  margin: 5px;
-}
+  width: 50px;
 
+}
 .mat-cell {
   text-align: center;
 }
@@ -23,7 +22,14 @@
 }
 
 button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: rgba(255,255,255,.7) solid 1px;
-  width: 95%;
+  margin: 8px;
   font-size: 17px;
+}
+
+.btn-done {
+  background: yellowgreen;
 }
