@@ -74,7 +74,7 @@ export class AddProjectComponent implements  OnInit {
   deleteCurrentProject(): void {
     this.projectService.deleteProject(this.currentProjectId).subscribe(() => {
       this.currentProjectId = 0;
-      setTimeout(() => this.updateProjectList(), 100);
+      this.updateProjectList();
       this.updateInProgressTaskAndDoneTaskTable();
       this.todoListService.setCurrentProject(this.currentProjectId);
     });
@@ -101,6 +101,7 @@ export class AddProjectComponent implements  OnInit {
       }
       return _acc;
     }, 0 as number)
+
     this.updateInProgressTaskAndDoneTaskTable()
     this.todoListService.setCurrentProject(this.currentProjectId)
   }

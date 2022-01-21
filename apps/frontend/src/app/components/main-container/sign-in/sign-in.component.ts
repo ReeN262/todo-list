@@ -1,5 +1,5 @@
-import {AuthService} from "../../../service/auth/auth.service";
 import { Component } from '@angular/core';
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-sign-in',
@@ -7,11 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent  {
+  constructor() {}
 
-  constructor(
-  readonly authService: AuthService) {
-  }
   async signIn() {
-    window.location.replace(`http://localhost:3333/api/auth/google`);
+    window.location.replace(`${environment.baseUrl}/api/auth/google`);
   }
 }
