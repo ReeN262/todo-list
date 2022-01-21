@@ -1,6 +1,5 @@
 import {AuthService} from "../../service/auth/auth.service";
 import { Component, OnInit } from '@angular/core';
-import {TodoListService} from "../../service/todo/todo-list.service";
 
 @Component({
   selector: 'app-main-container',
@@ -9,9 +8,7 @@ import {TodoListService} from "../../service/todo/todo-list.service";
 })
 export class MainContainerComponent implements OnInit {
   authValidate: boolean = false;
-  constructor(
-    readonly authService: AuthService,
-    readonly todoListService: TodoListService) { }
+  constructor(readonly authService: AuthService) { }
 
   ngOnInit(): void {
     this.checkLogin();

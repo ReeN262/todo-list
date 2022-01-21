@@ -1,6 +1,5 @@
 import {AuthService} from "../../../service/auth/auth.service";
 import { Component, OnInit } from '@angular/core';
-import {TodoListService} from "../../../service/todo/todo-list.service";
 
 @Component({
   selector: 'app-logout',
@@ -10,19 +9,10 @@ import {TodoListService} from "../../../service/todo/todo-list.service";
 export class LogoutComponent implements OnInit {
 
   constructor(
-    readonly todoListService: TodoListService,
     readonly authService: AuthService) { }
 
   ngOnInit(): void {
   }
-  updateInProgressTaskTable() {
-    this.todoListService.addTask([])
-  }
-
-  updateDoneTaskTable() {
-    this.todoListService.addInDoneTask([]);
-  }
-
 
   logout() {
     this.authService.logout().subscribe();

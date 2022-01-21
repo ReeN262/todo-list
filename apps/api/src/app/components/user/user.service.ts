@@ -17,7 +17,7 @@ export class UserService {
     private userEntity: Repository<UserEntity>) {}
 
   async findUserByEmail(email:string): Promise<UserEntity | undefined> {
-    return this.userEntity.findOne({where: {email}})
+    return this.userEntity.findOne({where: {email: email}})
   }
 
   newUser(data: Partial<UserData>): Promise<UserEntity> {
