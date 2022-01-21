@@ -1,23 +1,27 @@
 import {Injectable} from '@angular/core';
-
-import {CookieService} from "ngx-cookie-service";
 import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {environment} from "../../../environments/environment";
 
+interface User {
+  id: string;
+  name: string;
+  avatar: string;
+  email: string;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private baseUrl = `${environment.baseUrl}/api/user`
   constructor(
-    readonly http: HttpClient,
-    readonly cookieService: CookieService) {
+    readonly http: HttpClient) {
   }
 
-  login() {
-    return this.cookieService.check('connect.sid');
+  login(): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}/info`)
   }
-  logout() {
-    this.http.get('http://localhost:3000/api/user/delete', {
-      withCredentials: true
-    }).subscribe(del => del);
+  logout(): Observable<User> {
+    return this.http.delete<User>(`${this.baseUrl}/delete`);
   }
 }

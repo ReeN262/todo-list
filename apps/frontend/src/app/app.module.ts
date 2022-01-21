@@ -1,36 +1,41 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatSliderModule } from '@angular/material/slider';
+import {NgModule, Provider} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatTableModule } from '@angular/material/table';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
-import { InProgressiveComponent } from './components/left-components/in-progressive/in-progressive.component';
-import { DoneComponent } from './components/right-components/done/done.component';
-import { AddTaskComponent } from './components/main-container/add-task/add-task.component';
-import { TaskComponent } from './components/left-components/task/task.component';
-import { DoneTaskComponent } from './components/right-components/done-task/done-task.component';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AddProjectComponent } from './components/main-container/add-project/add-project.component';
-import { MainContainerComponent } from './components/main-container/main-container.component';
-import {MatSelectModule} from "@angular/material/select";
-import { ProjectCreateDialogComponent } from './components/main-container/project-create-dialog/project-create-dialog.component';
-import {MatDialogModule} from "@angular/material/dialog";
+import { AddTaskComponent } from './components/main-container/add-task/add-task.component';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DoneComponent } from './components/done/done.component';
+import { DoneTaskComponent } from './components/done/done-task/done-task.component';
+import { FormsModule } from '@angular/forms';
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { InProgressiveComponent } from './components/InProgress/in-progressive.component';
 import { LogoutComponent } from './components/main-container/logout/logout.component';
+import { MainContainerComponent } from './components/main-container/main-container.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from "@angular/material/select";
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { ProjectCreateDialogComponent } from './components/main-container/project-create-dialog/project-create-dialog.component';
 import { SignInComponent } from './components/main-container/sign-in/sign-in.component';
-import {CookieService} from "ngx-cookie-service";
-import {HttpClientModule} from "@angular/common/http";
-import {OAuthModule} from "angular-oauth2-oidc";
+import { TaskComponent } from './components/InProgress/task/task.component';
+import {AuthInterceptor} from "./auth.interceptor";
+
+const INTERCEPTOR_PROVIDER: Provider = {
+  provide: HTTP_INTERCEPTORS,
+  useClass: AuthInterceptor,
+  multi: true,
+}
 
 @NgModule({
   declarations: [
@@ -65,9 +70,8 @@ import {OAuthModule} from "angular-oauth2-oidc";
     MatSelectModule,
     MatDialogModule,
     HttpClientModule,
-    OAuthModule.forRoot()
   ],
-  providers: [CookieService],
+  providers: [INTERCEPTOR_PROVIDER],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

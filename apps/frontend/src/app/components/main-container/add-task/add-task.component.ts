@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {TaskService} from "../../../service/task/task.service";
 import { TodoListService } from '../../../service/todo/todo-list.service';
-import {InProgressService} from "../../../service/InProgress/inProgress.service";
 
 @Component({
   selector: 'app-add-task',
@@ -12,12 +12,13 @@ export class AddTaskComponent implements OnInit {
   currentProjectId: number;
 
   constructor(
-    readonly inProgressService: InProgressService,
+    readonly taskService: TaskService,
     readonly todoListService: TodoListService) {}
 
-  addTask() {
+  addTask(): void {
     if (!this.newTask) return;
-    this.inProgressService.addTaskInProgress({
+
+    this.taskService.addTask({
       taskName: this.newTask,
       projectId: this.currentProjectId,
     }).subscribe(() => {
@@ -26,13 +27,11 @@ export class AddTaskComponent implements OnInit {
     });
   }
 
-  updateTableInProgress() {
-    this.inProgressService.getAllInProgressTask(this.currentProjectId).subscribe(tasks => {
+  updateTableInProgress(): void {
+    this.taskService.getTasks(this.currentProjectId, false).subscribe(tasks => {
       this.todoListService.addTask(tasks)
     })
   }
-
-
 
   ngOnInit(): void {
     this.todoListService.getCurrentProject().subscribe(project => {

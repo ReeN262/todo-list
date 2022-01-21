@@ -1,23 +1,20 @@
+import * as RedisStore from 'connect-redis';
+import * as redis from 'redis';
+import * as session from 'express-session';
+import {ConfigModule} from "@nestjs/config";
 import { Module } from '@nestjs/common';
+import {SessionModule} from "nestjs-session";
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import {AuthModule} from "./auth/auth.module";
-import {ConfigModule} from "@nestjs/config";
-import {UserEntity} from "./entity/user.entity";
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserController } from './user/user.controller';
-import * as redis from 'redis';
-import * as session from 'express-session';
-import * as RedisStore from 'connect-redis';
-import {SessionModule} from "nestjs-session";
-import {ProjectEntity} from "./entity/project.entity";
-import {InProgressEntity} from "./entity/in-progress.entity";
-import {DoneTaskEntity} from "./entity/doneTask.entity";
-import {ProjectModule} from "./project/project.module";
-import {UserModule} from "./user/user.module";
-import {DoneTaskModule} from "./done-task/done-task.module";
-import {InProgressTaskModule} from "./in-progress-task/in-progress-task.module";
+import {AuthModule} from "./components/auth/auth.module";
+import {TaskEntity} from "./components/task/task.entity";
+import {TaskModule} from "./components/task/task.module";
+import { ProjectEntity } from "./components/project/project.entity";
+import {ProjectModule} from "./components/project/project.module";
+import {UserEntity} from "./components/user/user.entity";
+import {UserModule} from "./components/user/user.module";
 
 @Module({
   imports: [
@@ -32,19 +29,17 @@ import {InProgressTaskModule} from "./in-progress-task/in-progress-task.module";
         secret: `${process.env.REDIS_SECRET_KEY}`,
         resave: false,
         saveUninitialized: false,
-        cookie: {httpOnly: false, secure: false},
+        // cookie: {httpOnly: false, secure: false},
       },
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
-      entities: [UserEntity, ProjectEntity, InProgressEntity, DoneTaskEntity],
+      entities: [UserEntity, ProjectEntity, TaskEntity],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([UserEntity, ProjectEntity, InProgressEntity, DoneTaskEntity]),
     ProjectModule,
-    DoneTaskModule,
-    InProgressTaskModule,
+    TaskModule,
     UserModule,
     AuthModule,
     ],

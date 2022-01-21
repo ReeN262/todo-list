@@ -1,11 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {TaskService} from "../../../service/task/task.service";
 import {MatDialog} from "@angular/material/dialog";
 import {ProjectCreateDialogComponent} from "../project-create-dialog/project-create-dialog.component";
-import {TodoListService} from "../../../service/todo/todo-list.service";
-import {UserService} from "../../../service/user/user.service";
 import {ProjectService} from "../../../service/project/project.service";
-import {InProgressService} from "../../../service/InProgress/inProgress.service";
-import {DoneTaskService} from "../../../service/doneTask/done-task.service";
+import {TodoListService} from "../../../service/todo/todo-list.service";
+import {AuthService} from "../../../service/auth/auth.service";
 
 interface User {
   id: string;
@@ -28,16 +27,15 @@ interface Projects {
 export class AddProjectComponent implements  OnInit {
   @Input() currentProjectId = 0;
   name: string;
-  projects: Array<Projects> = []
+  projects: Projects[] = [];
   user: User;
 
   constructor(
     public dialog: MatDialog,
-    readonly userService: UserService,
     readonly projectService: ProjectService,
     readonly todoListService: TodoListService,
-    readonly inProgressService: InProgressService,
-    readonly doneTaskService: DoneTaskService) {
+    readonly taskService: TaskService,
+    readonly authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -58,23 +56,22 @@ export class AddProjectComponent implements  OnInit {
       data: {name: this.name},
     });
 
-    dialogRef.afterClosed().subscribe(async result => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.projectService.newProject(result).subscribe(() => {
           this.updateProjectList();
         })
       }
     });
-
   }
 
-  userData() {
-    this.userService.getUserData().subscribe(data => {
-      this.user = data
+  userData(): void {
+    this.authService.login().subscribe((data: User) => {
+      this.user = data;
     });
   }
 
-  async deleteCurrentProject() {
+  deleteCurrentProject(): void {
     this.projectService.deleteProject(this.currentProjectId).subscribe(() => {
       this.currentProjectId = 0;
       setTimeout(() => this.updateProjectList(), 100);
@@ -83,13 +80,12 @@ export class AddProjectComponent implements  OnInit {
     });
   }
 
-  updateInProgressTaskAndDoneTaskTable() {
+  updateInProgressTaskAndDoneTaskTable(): void {
     if (this.currentProjectId > 0) {
-      this.inProgressService.getAllInProgressTask(this.currentProjectId).subscribe(async tasks => {
-        this.todoListService.addTask(tasks)
+      this.taskService.getTasks(this.currentProjectId, false).subscribe( tasks => {
+        this.todoListService.addTask(tasks);
       })
-      this.doneTaskService.getAllDoneTask(this.currentProjectId).subscribe(doneTask => {
-
+      this.taskService.getTasks(this.currentProjectId, true).subscribe(doneTask => {
         this.todoListService.addInDoneTask(doneTask);
       })
     } else {
@@ -98,7 +94,7 @@ export class AddProjectComponent implements  OnInit {
     }
   }
 
-  changeProject(projectName: string) {
+  changeProject(projectName: string): void {
     this.currentProjectId = this.projects.reduce((_acc, project: Projects) => {
       if (project.name === projectName) {
          _acc = project.id;

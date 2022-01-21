@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../../service/auth/auth.service";
+import { Component, OnInit } from '@angular/core';
 import {TodoListService} from "../../../service/todo/todo-list.service";
 
 @Component({
@@ -25,8 +25,7 @@ export class LogoutComponent implements OnInit {
 
 
   logout() {
-    this.authService.logout();
-    this.updateInProgressTaskTable();
-    this.updateDoneTaskTable();
+    this.authService.logout().subscribe();
+    window.location.replace('http://localhost:4200/todo-list');
   }
 }

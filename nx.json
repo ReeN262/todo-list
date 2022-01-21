@@ -1,5 +1,5 @@
 {
-  "npmScope": "td",
+  "npmScope": "app",
   "affected": {
     "defaultBase": "main"
   },

@@ -72,7 +72,7 @@
       "projectType": "application",
       "root": "apps/frontend",
       "sourceRoot": "apps/frontend/src",
-      "prefix": "app",
+      "prefix": "td",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",

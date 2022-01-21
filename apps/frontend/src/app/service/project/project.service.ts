@@ -1,6 +1,7 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import { Observable } from "rxjs";
+import { environment } from "../../../environments/environment";
 
 interface Projects {
   id: number;
@@ -11,26 +12,18 @@ interface Projects {
   providedIn: 'root'
 })
 export class ProjectService {
-  private baseUrl = 'http://localhost:3000/api/project'
-  private httpOptions;
-  constructor(readonly http: HttpClient) {
-    this.httpOptions = {
-      withCredentials: true
-    }
-}
+  private baseUrl = `${environment.baseUrl}/api/project`;
+  constructor(readonly http: HttpClient) {}
 
-  newProject(name: string) {
-    return this.http.post(`${this.baseUrl}/create`, {
-      name: name,
-    },
-    this.httpOptions);
+  newProject(name: string): Observable<Projects> {
+    return this.http.post<Projects>(`${this.baseUrl}/create`, { name })
   }
 
   getAllProjects(): Observable<Projects[]> {
-    return this.http.get<Projects[]>(`${this.baseUrl}/get/all`, this.httpOptions);
+    return this.http.get<Projects[]>(`${this.baseUrl}/get/all`);
   }
 
-  deleteProject(id: number) {
-   return this.http.delete(`${this.baseUrl}/delete/${id}`, this.httpOptions)
+  deleteProject(id: number): Observable<Projects> {
+    return this.http.delete<Projects>(`${this.baseUrl}/delete/${id}`);
   }
 }

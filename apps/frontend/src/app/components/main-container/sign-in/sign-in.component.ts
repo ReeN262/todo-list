@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
 import {AuthService} from "../../../service/auth/auth.service";
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,6 +12,6 @@ export class SignInComponent  {
   readonly authService: AuthService) {
   }
   async signIn() {
-    window.location.replace(`http://localhost:3000/api/auth/google`);
+    window.location.replace(`http://localhost:3333/api/auth/google`);
   }
 }

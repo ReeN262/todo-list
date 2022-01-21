@@ -1,6 +1,6 @@
+import {AuthService} from "../../service/auth/auth.service";
 import { Component, OnInit } from '@angular/core';
 import {TodoListService} from "../../service/todo/todo-list.service";
-import {AuthService} from "../../service/auth/auth.service";
 
 @Component({
   selector: 'app-main-container',
@@ -8,14 +8,18 @@ import {AuthService} from "../../service/auth/auth.service";
   styleUrls: ['./main-container.component.css'],
 })
 export class MainContainerComponent implements OnInit {
+  authValidate: boolean = false;
   constructor(
     readonly authService: AuthService,
     readonly todoListService: TodoListService) { }
 
   ngOnInit(): void {
+    this.checkLogin();
   }
 
   checkLogin() {
-   return this.authService.login()
+   this.authService.login().subscribe( auth => {
+    this.authValidate = !!auth;
+   })
   }
 }
